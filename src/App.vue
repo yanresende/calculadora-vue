@@ -1,47 +1,44 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="container">
+    <header>
+      <h1>Calculadora Aritmética</h1>
+      <p>Escolha entre soma ou subtração:</p>
+    </header>
+    <form>
+      <select v-model="operacao" class="form-control">
+        <option value="soma">Soma</option>
+        <option value="subtracao">Subtração</option>
+      </select>
+      <input
+        v-model="estado.numeroA"
+        type="number"
+        placeholder="Digite o primeiro número"
+        class="form-control"
+      />
+      <input
+        v-model="estado.numeroB"
+        type="number"
+        placeholder="Digite o segundo número"
+        class="form-control"
+      />
+      <label>Seu resultado é: {{ calcularResultado() }}</label>
+    </form>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script setup>
+import { reactive } from "vue";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+const estado = reactive({
+  numeroA: 0,
+  numeroB: 0,
+});
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+let operacao = "soma";
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+const calcularResultado = () => {
+  return operacao === "soma" ? estado.numeroA + estado.numeroB : estado.numeroA - estado.numeroB;
+};
+</script>
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
